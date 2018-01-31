@@ -91,6 +91,7 @@ def update_sheets():
                 "2": "Steward",
                 "101": "Trust Anchor"
             }
+            
 
             
             role_name = ROLE_MAP[Type] if Type in ROLE_MAP else "No Role"
@@ -99,7 +100,24 @@ def update_sheets():
             # for each row. Each entry in the array is a new column.
 
             # Here we can use our transformed data and create new rows as needed!
-            row = [Label, role_name, Tags, Description]
+            DID_NAME_MAP = {
+                '2dTaSgHtQ8ZNZ5GLqomauU': 'Worksafe BC',
+                'K81nomphZemfm6iwothDD8': 'City of Surrey',
+                '7VkdE3erBDJnrQMVbEnRzg': 'BC Registries',
+                '8BaVQQW6WkRQ2p1gY1FG3A': 'Fraser Valley Health Authority',
+                '4uh1DP9AZcoYa5usCKoq83': 'Liquor Licensing',
+                '6ksN1bSHrwa3ZuHVLYcbjq': 'Ministry of Finance',
+                '6rcjxpqmmubVRWDdvbEvRc': 'TheOrgBook Issuer',
+                'T9vgKTDNiiEbjrFu5fx8gF': 'TheOrgBook Verifier',
+                'LfceHugWHnzZMhy92TbcbV': 'TheOrgBook Holder'
+            }
+
+            print ( 'DID_Name' +str(related_label)) 
+            
+
+            related_label = DID_NAME_MAP[Name] if Name in DID_NAME_MAP else 'Label'
+
+            row = [related_label, role_name, Tags, Description]
 
             body = {'values': [row]}
 
