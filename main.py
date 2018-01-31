@@ -97,9 +97,24 @@ def update_sheets():
            
             # We build a row in the spreadsheet. We can have as many columns as we want
             # for each row. Each entry in the array is a new column.
-
             # Here we can use our transformed data and create new rows as needed!
-            row = [Label, role_name, Tags, Description]
+            #Give a Human Readable Name for the Ledger's DID 
+            DID_NAME_MAP = {
+                'V4SGRU86Z58d6TV7PBUe6f': 'Government of British Columbia',
+                '2dTaSgHtQ8ZNZ5GLqomauU': 'Worksafe BC',
+                'K81nomphZemfm6iwothDD8': 'City of Surrey',
+                '7VkdE3erBDJnrQMVbEnRzg': 'BC Registries',
+                '8BaVQQW6WkRQ2p1gY1FG3A': 'Fraser Valley Health Authority',
+                '4uh1DP9AZcoYa5usCKoq83': 'Liquor Licensing',
+                '6ksN1bSHrwa3ZuHVLYcbjq': 'Ministry of Finance',
+                '6rcjxpqmmubVRWDdvbEvRc': 'TheOrgBook Issuer',
+                'T9vgKTDNiiEbjrFu5fx8gF': 'TheOrgBook Verifier',
+                'LfceHugWHnzZMhy92TbcbV': 'TheOrgBook Holder'
+            }
+
+            related_label = DID_NAME_MAP[Label] if Label in DID_NAME_MAP else Label
+            
+            row = [str(related_label), str(role_name), Tags, Description]
 
             body = {'values': [row]}
 
@@ -139,8 +154,23 @@ def update_sheets():
 
                     Label = related_content['identifier'] if 'identifier' in related_content else ""
                     Schema = related_content['data'] if 'data' in related_content else ""
-                    
-            row = [str(Label), str(Schema), str(ClaimDef), str(Ref), str(reqId)]
+
+            DID_NAME_MAP = {
+                'V4SGRU86Z58d6TV7PBUe6f': 'Government of British Columbia',
+                '2dTaSgHtQ8ZNZ5GLqomauU': 'Worksafe BC',
+                'K81nomphZemfm6iwothDD8': 'City of Surrey',
+                '7VkdE3erBDJnrQMVbEnRzg': 'BC Registries',
+                '8BaVQQW6WkRQ2p1gY1FG3A': 'Fraser Valley Health Authority',
+                '4uh1DP9AZcoYa5usCKoq83': 'Liquor Licensing',
+                '6ksN1bSHrwa3ZuHVLYcbjq': 'Ministry of Finance',
+                '6rcjxpqmmubVRWDdvbEvRc': 'TheOrgBook Issuer',
+                'T9vgKTDNiiEbjrFu5fx8gF': 'TheOrgBook Verifier',
+                'LfceHugWHnzZMhy92TbcbV': 'TheOrgBook Holder'
+                }
+
+            current_label = DID_NAME_MAP[Label] if Label in DID_NAME_MAP else Label
+                                
+            row = [str(current_label), str(Schema), str(ClaimDef), str(Ref), str(reqId)]
             body = {'values': [row]}
             
             # Write ledger entries
