@@ -79,7 +79,7 @@ def update_sheets():
 
             Label = content['dest'] if 'dest' in content else ""
             Type = content['role'] if 'role' in content else ""
-            Description = content['verkey'] if 'verkey' in content else ""
+            Description = content['dest'] if 'dest' in content else ""
             Tags = content['identifier'] if 'identifier' in content else ""
 
             # We can transform the data as needed here. For example, if we wanted to
@@ -100,7 +100,11 @@ def update_sheets():
             # Here we can use our transformed data and create new rows as needed!
             #Give a Human Readable Name for the Ledger's DID 
             DID_NAME_MAP = {
-                'V4SGRU86Z58d6TV7PBUe6f': 'Government of British Columbia',
+                'Th7MpTaRZVRYnPiabds81Y': 'Node 1',
+                'EbP4aYNeTHL6q385GuVpRV': 'Node 2',
+                '4cU41vWW82ArfxJxHkzXPG': 'Node 3',
+                'TWwCRQRZ2ZHMJFn9TzLp7W': 'Node 4',
+                'V4SGRU86Z58d6TV7PBUe6f': 'Truste',
                 '2dTaSgHtQ8ZNZ5GLqomauU': 'Worksafe BC',
                 'K81nomphZemfm6iwothDD8': 'City of Surrey',
                 '7VkdE3erBDJnrQMVbEnRzg': 'BC Registries',
@@ -109,7 +113,7 @@ def update_sheets():
                 '6ksN1bSHrwa3ZuHVLYcbjq': 'Ministry of Finance',
                 '6rcjxpqmmubVRWDdvbEvRc': 'TheOrgBook Issuer',
                 'T9vgKTDNiiEbjrFu5fx8gF': 'TheOrgBook Verifier',
-                'LfceHugWHnzZMhy92TbcbV': 'TheOrgBook Holder'
+                'LfceHugWHnzZMhy92TbcbV': 'TheOrgBook Holder',
             }
 
             related_label = DID_NAME_MAP[Label] if Label in DID_NAME_MAP else Label
@@ -153,10 +157,17 @@ def update_sheets():
                     related_content = ledger_entry[1]
 
                     Label = related_content['identifier'] if 'identifier' in related_content else ""
-                    Schema = related_content['data'] if 'data' in related_content else ""
+                    #Schema = related_content['data']['name'] and related content['data']['version']: if 'data' in related_content else ""
+                    if 'data' in related_content:
+                        Schema = 'Name:' + related_content['data']['name'] + '\n' + 'Version:' + related_content['data']['version']
+                    
+                    #related_schema_version = related_content['data']['version'] if 'data' in related_content else ""
+                    #Schema = related_schema_name + related_schema_version
+
+                        
 
             DID_NAME_MAP = {
-                'V4SGRU86Z58d6TV7PBUe6f': 'Government of British Columbia',
+                'V4SGRU86Z58d6TV7PBUe6f': 'Truste',
                 '2dTaSgHtQ8ZNZ5GLqomauU': 'Worksafe BC',
                 'K81nomphZemfm6iwothDD8': 'City of Surrey',
                 '7VkdE3erBDJnrQMVbEnRzg': 'BC Registries',
@@ -165,7 +176,7 @@ def update_sheets():
                 '6ksN1bSHrwa3ZuHVLYcbjq': 'Ministry of Finance',
                 '6rcjxpqmmubVRWDdvbEvRc': 'TheOrgBook Issuer',
                 'T9vgKTDNiiEbjrFu5fx8gF': 'TheOrgBook Verifier',
-                'LfceHugWHnzZMhy92TbcbV': 'TheOrgBook Holder'
+                'LfceHugWHnzZMhy92TbcbV': 'TheOrgBook Holder',
                 }
 
             current_label = DID_NAME_MAP[Label] if Label in DID_NAME_MAP else Label
@@ -181,7 +192,6 @@ def update_sheets():
                 content['type'], counter_sheet_2, counter_sheet_2),
             body=body,
             valueInputOption="RAW").execute()
-
             counter_sheet_2 += 1 
 
             #legal_name = ...
@@ -206,7 +216,7 @@ def update_sheets():
 def main():
     while(True):
         update_sheets()
-        time.sleep(60)
+        time.sleep(20)
 
 
 if __name__ == '__main__':
